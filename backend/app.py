@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import sqlite3
 import os
 from dotenv import load_dotenv
 import requests
 
 app = Flask(__name__)
+CORS(app)
 
-#Load env and retrieve API key
+#Load environment and retrieve API key for security
 load_dotenv()
 API_KEY = os.getenv("LLM_API_KEY")
 
@@ -32,11 +34,25 @@ def root():
 
 #Post request for generated result 
 @app.route('/generate-character', methods=['POST'])
-def generate_character():
-    #TODO: Parse json request and call LLM API to generate character based on keywords
-    
-    return jsonify({"message": "Placeholder"})
+def character():
+    try:
+        # 1. Parse JSON request
+        data = request.get_json()
+        answers = data.get("answers", [])
+        if not answers:
+            return jsonify({"error": "Missing field"}), 400
+        print(answers)
 
+        return jsonify({
+            "name": "-",
+            "age": "-",
+            "hobby": "-",
+            "summary":"-"
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 if __name__ == "__main__":
     root()
     init_db()

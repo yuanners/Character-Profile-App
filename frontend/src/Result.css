@@ -1,0 +1,26 @@
+.result-container {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .result-image {
+    width: 200px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .result-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .result-button:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,13 @@
+/* App.css */
+.App {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 20px;
+}
