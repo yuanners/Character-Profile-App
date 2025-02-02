@@ -2,9 +2,12 @@
 This is a full-stack application that generates character profiles using an LLM API, stores them in a database, and displays them in a React frontend. 
 The application allows users to take a quiz, generate a character match, and view saved character profiles.
 
-Setup Instructions
+## App Demo
+![App Demo](assets/demo.gif)
 
-## 1. Install Dependencies
+## Setup Instructions
+
+### 1. Install Dependencies
 
 Backend Setup
 ```
@@ -20,7 +23,7 @@ cd frontend
 npm install
 ```
 
-## 2. Set Up Environment Variables
+### 2. Set Up Environment Variables
 
 Create a ```.env``` file inside the ```backend/``` folder with the following values:
 Make sure you have a valid API key to use the [Awan LLM models](https://www.awanllm.com/).
@@ -39,7 +42,7 @@ api_key = "your-actual-api-key-here"
 encrypted_api_key = cipher.encrypt(api_key.encode())
 ```
 
-## 3. Run the Application
+### 3. Run the Application
 
 Start the Backend Server
 ```
