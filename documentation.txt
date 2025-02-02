@@ -1,0 +1,33 @@
+Handling of Malformed JSON
+
+The LLM API may return invalid or improperly formatted JSON. To mitigate this:
+
+The prompt is specified with expected output fields to standardise the output as much as possible.
+
+The response is parsed with proper error-handling.
+If JSON decoding fails, a structured error message is returned.
+
+Regex is used to extract expected fields (name, age, hobbies, personality traits).
+
+API Key Encryption
+To ensure the key is not stored in plaintext and is encrypted at rest.
+
+To securely store and retrieve the API key:
+1. Encryption: The API key is encrypted using the cryptography.fernet library.
+2. Storage: The encrypted key is stored in the .env file.
+3. Decryption: The key is decrypted at runtime before making API requests.
+
+Alternative Approach: Singles Inferno Character Matching
+
+Instead of generating a character profile from scratch, I took an alternative approach by creating a Singles Inferno character-matching quiz. This was inspired by popular Korean personality quizzes, such as https://ktestone.com/loveCharacterEng. 
+
+Why I Chose This Approach
+- Relevance: Singles Inferno is a trending show, making this concept more engaging for users.
+- User Interaction: Personality quizzes are **interactive and fun**, increasing user engagement.
+- Personalization: The AI-generated results make each outcome feel tailored to the user’s responses.
+
+How It Adds Value
+- Increases User Retention: More users are likely to take the quiz and share their results.
+- Aligns with Current Trends: Capitalizes on the **popularity of the show** and personality-based entertainment.
+- Demonstrates AI’s Versatility: Instead of a generic LLM-based generation, this approach combines AI with a structured quiz format, ensuring more controlled and relevant results.
+
