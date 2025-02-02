@@ -5,8 +5,6 @@ import Result from './Result';
 
 function App() {
   const [character, setCharacter] = useState(null);
-
-  // Function to handle the character generation based on the quiz answers
   const generateCharacter = async (answers) => {
     try {
       const response = await fetch('http://127.0.0.1:5000/generate-character', {
@@ -22,7 +20,7 @@ function App() {
       }
 
       const data = await response.json();
-      setCharacter(data);  // Update the state with the character result
+      setCharacter(data); 
     } catch (error) {
       console.error('Error:', error);
     }
@@ -31,12 +29,9 @@ function App() {
   return (
     <div className="App">
       <h1>What Singles Inferno Character Are You?</h1>
-
-      {/* Show the quiz if no character result */}
       {!character ? (
         <Quiz onGenerate={generateCharacter} />
       ) : (
-        // Show the result if character is generated
         <Result characterData={character} />
       )}
     </div>

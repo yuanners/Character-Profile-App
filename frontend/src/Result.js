@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Result.css';
 const Result = ({ characterData }) => {
   if (!characterData || !characterData.name) {
     return <div>Loading...</div>;

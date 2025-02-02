@@ -1,13 +1,12 @@
 /* App.css */
 .App {
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  background-color: #f7f7f7;
-  padding: 20px;
+  font-family: "Courgette", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #E4CDDD;
+  padding: 200px;
   text-align: center;
+  background-color: #590004;
 }
 
-h1 {
-  font-size: 30px;
-  color: #333;
-  margin-bottom: 20px;
-}
+
