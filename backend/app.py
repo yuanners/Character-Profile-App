@@ -114,6 +114,22 @@ def character():
         print(f"Exception Occurred: {e}")  
         return jsonify({"error": str(e)}), 500
     
+@app.route('/get-profiles', methods=['GET'])
+def get_profiles():
+    try:
+        with sqlite3.connect(DATABASE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM characters")
+            characters = cursor.fetchall()
+            # Format the results to return a list of dictionaries
+            formatted_characters = [
+                {"id": character[0], "name": character[1], "age": character[2], "hobby": character[3]} 
+                for character in characters
+            ]
+            return jsonify(formatted_characters)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     root()
     init_db()

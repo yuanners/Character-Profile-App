@@ -1,5 +1,7 @@
 .result-container {
-    background-color:#E4CDDD;
+    background-image: url('../../assets/background.jpg'); 
+    background-size: cover; 
+    background-position: center center;
     text-align: center;
     border-radius: 12px;
     width: 100%;
@@ -21,4 +23,31 @@
 .result-container p {
     font-size: 20px;
     margin-bottom: 15px;
+}
+
+button {
+    font-size: 16px;
+    padding: 12px 25px;
+    margin: 10px;
+    cursor: pointer;
+    border: 2px solid #C65060;  
+    border-radius: 8px;
+    background-color: #893A49;
+    color: #E4CDDD; 
+    font-family: "Courgette", serif;
+    font-weight: 600;
+    transition: all 0.1s ease;
+}
+
+button:hover {
+    background-color: #4C1208; 
+}
+
+button.selected {
+    background-color: #4C1208;  
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }

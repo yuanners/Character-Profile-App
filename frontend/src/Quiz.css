@@ -10,7 +10,7 @@ body {
     border-radius: 12px;
     width: 100%;
     max-width: 800px;
-    height: 350px;
+    height: 400px;
     margin: 50px auto;
     text-align: center;
     box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
@@ -25,7 +25,7 @@ body {
     padding-top: 50px;
 }
 
-.option-button {
+button {
     font-size: 16px;
     padding: 12px 25px;
     margin: 10px;
@@ -38,16 +38,18 @@ body {
     font-weight: 600;
     transition: all 0.1s ease;
 }
-
-.option-button:hover {
+.view-profiles-button {
+    margin-top: 60px;
+}
+button:hover {
     background-color: #4C1208; 
 }
 
-.option-button.selected {
+button.selected {
     background-color: #4C1208;  
 }
 
-.option-button:active {
+button:active {
     transform: translateY(4px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }

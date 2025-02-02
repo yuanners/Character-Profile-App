@@ -21,7 +21,7 @@ const questions = [
     }
 ];
 
-const Quiz = () => {
+const Quiz = ({ onGenerate, setShowQuiz }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null); 
@@ -58,7 +58,7 @@ const Quiz = () => {
     setCharacterResult(result); 
     setTimeout(()=>{
         setLoading(false);
-    }, 3000); // Delay to simulate loading time
+    }, 3000); 
   };
 
   if (characterResult) {
@@ -68,7 +68,7 @@ const Quiz = () => {
   return (
     <div className="quiz-container">
       {loading ? (
-        <div className="loader"></div>  // Only loader is displayed during loading
+        <div className="loader"></div> 
       ) : (
         <>
           <h2>{questions[currentQuestionIndex].question}</h2>
@@ -84,6 +84,13 @@ const Quiz = () => {
               </button>
             ))}
           </div>
+
+          <button 
+            className="view-profiles-button" 
+            onClick={() => setShowQuiz(false)} 
+          >
+            View Saved Profiles
+          </button>
         </>
       )}
     </div>

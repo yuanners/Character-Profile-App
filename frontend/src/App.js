@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
 import Quiz from './Quiz';
-import Result from './Result';
+import Profiles from './Profiles';
 
 function App() {
   const [character, setCharacter] = useState(null);
+  const [showQuiz, setShowQuiz] = useState(true);
+
   const generateCharacter = async (answers) => {
     try {
       const response = await fetch('http://127.0.0.1:5000/generate-character', {
@@ -29,10 +31,16 @@ function App() {
   return (
     <div className="App">
       <h1>What Singles Inferno Character Are You?</h1>
-      {!character ? (
-        <Quiz onGenerate={generateCharacter} />
+      
+      {showQuiz ? (
+        <Quiz
+          onGenerate={generateCharacter}
+          setShowQuiz={setShowQuiz} 
+        />
       ) : (
-        <Result characterData={character} />
+        <Profiles
+          setShowQuiz={setShowQuiz}
+        />
       )}
     </div>
   );

@@ -13,6 +13,13 @@ const Result = ({ characterData }) => {
       <p><strong>Age:</strong> {age}</p>
       <p><strong>Hobbies:</strong> {hobbies}</p>
       <p><strong>Personality Traits:</strong> {personality_traits}</p>
+
+      <button
+        className="take-quiz-again-button"
+        onClick={() => window.location.reload()}
+      >
+        Take Quiz Again
+      </button>
     </div>
   );
 };
