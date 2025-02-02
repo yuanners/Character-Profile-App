@@ -6,14 +6,21 @@ from dotenv import load_dotenv
 import requests
 import json
 import re
-
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 CORS(app)
 
 
 load_dotenv()
-API_KEY="b5130271-de48-4102-9e57-0cfbdade2b49"
+encryption_key = os.getenv("ENCRYPTION_KEY")
+encrypted_api_key = os.getenv("ENCRYPTED_API_KEY")
+
+if not encryption_key or not encrypted_api_key:
+    raise ValueError("Missing encryption key or encrypted API key in environment variables")
+
+cipher = Fernet(encryption_key.encode())
+API_KEY = cipher.decrypt(encrypted_api_key.encode()).decode()
 DATABASE = "characters.db"
 
 def init_db():
@@ -40,7 +47,7 @@ def character():
         answers = data.get("answers", [])
         if not answers:
             return jsonify({"error": "Missing field"}), 400
-        print(answers)
+        #print(answers)
         
         prompt = f"""
         You are a personality quiz AI that assigns the closest Singles Inferno character (cast or MC from all 3 seasons) based on user answers. Based on these answers: {answers}, which Singles Inferno character is the closest match?
