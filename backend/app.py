@@ -16,7 +16,6 @@ load_dotenv()
 API_KEY="b5130271-de48-4102-9e57-0cfbdade2b49"
 DATABASE = "characters.db"
 
-#Initialise database
 def init_db():
     with sqlite3.connect(DATABASE) as conn:
         conn.execute("""
@@ -27,7 +26,6 @@ def init_db():
                 hobby TEXT
             )
         """)
-    print("Database initialised successfully.")
 
 
 @app.route('/')
@@ -97,6 +95,13 @@ def character():
         age = age_match.group(1) if age_match else "Unknown Age"
         hobbies = hobbies_match.group(1) if hobbies_match else "Unknown Hobbies"
         traits = traits_match.group(1) if traits_match else "No personality traits found."
+
+        with sqlite3.connect(DATABASE) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO characters (name, age, hobby) VALUES (?, ?, ?)
+            """, (name, age, hobbies))
+            conn.commit()
 
         return jsonify({
             "name": name,
