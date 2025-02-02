@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import requests
 import json
+import re
 
 
 app = Flask(__name__)
@@ -43,7 +44,18 @@ def character():
             return jsonify({"error": "Missing field"}), 400
         print(answers)
         
-        prompt = f"You are a personality quiz AI that assigns the closest Singles Inferno character (cast or MC from all 3 seasons) based on user answers. Based on these answers: {answers}, which Singles Inferno character is the closest match? Include their name, age, hobbies, and a short paragraph on their personality traits."
+        prompt = f"""
+        You are a personality quiz AI that assigns the closest Singles Inferno character (cast or MC from all 3 seasons) based on user answers. Based on these answers: {answers}, which Singles Inferno character is the closest match?
+
+        Please respond with the following information in the exact format:
+
+        - **Name**: [Character's name]
+        - **Age**: [Character's age]
+        - **Hobbies**: [List of character's hobbies]
+        - **Personality Traits**: [Short paragraph describing the character's personality traits]
+
+        Make sure the response strictly follows this format for easy parsing. Thank you!
+        """
 
         url = "https://api.awanllm.com/v1/chat/completions"
         payload = json.dumps({
@@ -75,7 +87,23 @@ def character():
         #print(f"Parsed JSON Response: {result}") 
         character_response = result.get("choices", [{}])[0].get("message", {}).get("content", "Error generating response.")
         print("Extracted Character Response:", character_response) 
-        return jsonify({"character": character_response})
+
+        name_match = re.search(r"\*\*Name\*\*:\s*(.*?)(?=\n|$)", character_response)
+        age_match = re.search(r"\*\*Age\*\*:\s*(\d+)", character_response)
+        hobbies_match = re.search(r"\*\*Hobbies\*\*:\s*(.*?)(?=\n|$)", character_response)
+        traits_match = re.search(r"\*\*Personality Traits\*\*:\s*(.*?)(?=\n|$)", character_response)
+
+        name = name_match.group(1) if name_match else "Unknown Name"
+        age = age_match.group(1) if age_match else "Unknown Age"
+        hobbies = hobbies_match.group(1) if hobbies_match else "Unknown Hobbies"
+        traits = traits_match.group(1) if traits_match else "No personality traits found."
+
+        return jsonify({
+            "name": name,
+            "age": age,
+            "hobbies": hobbies,
+            "personality_traits": traits
+        })
 
     except Exception as e:
         print(f"Exception Occurred: {e}")  
