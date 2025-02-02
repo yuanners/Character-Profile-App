@@ -39,7 +39,7 @@ def init_db():
 def root():
     return "Root directory."
 
-#Post request for generated result 
+
 @app.route('/generate-character', methods=['POST'])
 def character():
     try:
@@ -47,7 +47,6 @@ def character():
         answers = data.get("answers", [])
         if not answers:
             return jsonify({"error": "Missing field"}), 400
-        #print(answers)
         
         prompt = f"""
         You are a personality quiz AI that assigns the closest Singles Inferno character (cast or MC from all 3 seasons) based on user answers. Based on these answers: {answers}, which Singles Inferno character is the closest match?
@@ -79,17 +78,20 @@ def character():
             'Content-Type': 'application/json',
             'Authorization': f"Bearer {API_KEY}"
         }
-        
+
+        if not API_KEY:
+            return jsonify({"error": "API key is not set in environment variables"}), 500
+
         response = requests.request("POST", url, headers=headers, data=payload)
-        #print(f"Response Status Code: {response.status_code}")
-        #print(f"Response Headers: {response.headers}")
-        #print(f"Raw Response Text: {response.text}")
+        if response.status_code != 200:
+            return jsonify({"error": "Failed to fetch data from LLM API", "status_code": response.status_code}), 500
+
         try:
             result = response.json()
         except json.JSONDecodeError:
             return jsonify({"error": "Invalid JSON response from LLM API", "response_text": response.text}), 500
 
-        #print(f"Parsed JSON Response: {result}") 
+        
         character_response = result.get("choices", [{}])[0].get("message", {}).get("content", "Error generating response.")
         print("Extracted Character Response:", character_response) 
 
@@ -103,12 +105,15 @@ def character():
         hobbies = hobbies_match.group(1) if hobbies_match else "Unknown Hobbies"
         traits = traits_match.group(1) if traits_match else "No personality traits found."
 
-        with sqlite3.connect(DATABASE) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO characters (name, age, hobby) VALUES (?, ?, ?)
-            """, (name, age, hobbies))
-            conn.commit()
+        try:
+            with sqlite3.connect(DATABASE) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO characters (name, age, hobby) VALUES (?, ?, ?)
+                """, (name, age, hobbies))
+                conn.commit()
+        except sqlite3.DatabaseError as db_error:
+            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 500
 
         return jsonify({
             "name": name,
@@ -128,14 +133,13 @@ def get_profiles():
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM characters")
             characters = cursor.fetchall()
-            # Format the results to return a list of dictionaries
             formatted_characters = [
                 {"id": character[0], "name": character[1], "age": character[2], "hobby": character[3]} 
                 for character in characters
             ]
             return jsonify(formatted_characters)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"Unable to load data from database": str(e)}), 500
 
 if __name__ == "__main__":
     root()
