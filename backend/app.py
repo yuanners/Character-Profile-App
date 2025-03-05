@@ -12,7 +12,7 @@ CORS(app)
 
 
 load_dotenv()
-API_KEY = os.getenv("API_KEY")
+API_KEY = os.environ.get('API_KEYKEY')
 DATABASE = "characters.db"
 
 def init_db():
