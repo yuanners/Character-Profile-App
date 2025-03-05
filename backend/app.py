@@ -136,4 +136,4 @@ def get_profiles():
 if __name__ == "__main__":
     root()
     init_db()
-    app.run(debug=True)
+    app.run()
