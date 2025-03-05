@@ -29,17 +29,7 @@ Create a ```.env``` file inside the ```backend/``` folder with the following val
 Make sure you have a valid API key to use the [Awan LLM models](https://www.awanllm.com/).
 
 ```
-ENCRYPTION_KEY=<your-generated-encryption-key>
-ENCRYPTED_API_KEY=<your-encrypted-API-key>
-```
-To generate the keys:
-```
-from cryptography.fernet import Fernet
-
-encryption_key = Fernet.generate_key()
-cipher = Fernet(encryption_key)
-api_key = "your-actual-api-key-here"
-encrypted_api_key = cipher.encrypt(api_key.encode())
+API_KEY=<your-API-key>
 ```
 
 ### 3. Run the Application
