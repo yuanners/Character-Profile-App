@@ -2,7 +2,7 @@
 This is a full-stack application that generates character profiles using an LLM API, stores them in a database, and displays them in a React frontend. 
 The application allows users to take a quiz, generate a character match, and view saved character profiles.
 
-Deployed on [Vercel]('https://character-profile-app.vercel.app/')
+Deployed on [Vercel](https://character-profile-app.vercel.app/)
 
 ## App Demo
 ![App Demo](assets/demo.gif)
