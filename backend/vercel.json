@@ -6,14 +6,10 @@
     "routes": [
       { 
         "src": "/(.*)", 
-        "dest": "app.py" ,
+        "dest": "index.js" ,
         "methods": [
                 "GET",
-                "POST",
-                "PUT",
-                "PATCH",
-                "DELETE",
-                "OPTIONS"
+                "POST"
             ]
       }
     ]

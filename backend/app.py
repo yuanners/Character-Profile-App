@@ -38,7 +38,7 @@ def character():
         data = request.get_json()
         answers = data.get("answers", [])
         if not answers:
-            return jsonify({"error": "Missing field"}), 400
+            return jsonify({"error": "Missing field"}), 101
         
         prompt = f"""
         You are a personality quiz AI that assigns the closest Singles Inferno character (cast or MC from all 3 seasons) based on user answers. Based on these answers: {answers}, which Singles Inferno character is the closest match?
@@ -72,16 +72,16 @@ def character():
         }
 
         if not API_KEY:
-            return jsonify({"error": "API key is not set in environment variables"}), 100
+            return jsonify({"error": "API key is not set in environment variables"}), 102
 
         response = requests.request("POST", url, headers=headers, data=payload)
         if response.status_code != 200:
-            return jsonify({"error": "Failed to fetch data from LLM API", "status_code": response.status_code}), 200
+            return jsonify({"error": "Failed to fetch data from LLM API", "status_code": response.status_code}), 103
 
         try:
             result = response.json()
         except json.JSONDecodeError:
-            return jsonify({"error": "Invalid JSON response from LLM API", "response_text": response.text}), 300
+            return jsonify({"error": "Invalid JSON response from LLM API", "response_text": response.text}), 104
 
         
         character_response = result.get("choices", [{}])[0].get("message", {}).get("content", "Error generating response.")
@@ -105,7 +105,7 @@ def character():
                 """, (name, age, hobbies))
                 conn.commit()
         except sqlite3.DatabaseError as db_error:
-            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 400
+            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 105
 
         return jsonify({
             "name": name,
@@ -116,7 +116,7 @@ def character():
 
     except Exception as e:
         print(f"Exception Occurred: {e}")  
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 106
     
 @app.route('/get-profiles', methods=['GET'])
 def get_profiles():
