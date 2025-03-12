@@ -40,7 +40,7 @@ def root():
     return "Root directory."
 
 
-@app.route('/generate-character', methods=['POST'])
+@app.route('/generate-character', methods=['GET'])
 def character():
     try:
         data = request.get_json()
