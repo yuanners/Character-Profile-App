@@ -9,7 +9,7 @@ function App() {
 
   const generateCharacter = async (answers) => {
     try {
-      const response = await fetch('/generate-character', {
+      const response = await fetch('https://character-profile-app-backend.vercel.app/generate-character', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

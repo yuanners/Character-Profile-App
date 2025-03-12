@@ -96,16 +96,16 @@ def character():
         age = age_match.group(1) if age_match else "Unknown Age"
         hobbies = hobbies_match.group(1) if hobbies_match else "Unknown Hobbies"
         traits = traits_match.group(1) if traits_match else "No personality traits found."
-
-        try:
-            with sqlite3.connect(DATABASE) as conn:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT INTO characters (name, age, hobby) VALUES (?, ?, ?)
-                """, (name, age, hobbies))
-                conn.commit()
-        except sqlite3.DatabaseError as db_error:
-            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 105
+        
+        #try:
+        #    with sqlite3.connect(DATABASE) as conn:
+        #        cursor = conn.cursor()
+        #       cursor.execute("""
+        #            INSERT INTO characters (name, age, hobby) VALUES (?, ?, ?)
+        #        """, (name, age, hobbies))
+        #        conn.commit()
+        #except sqlite3.DatabaseError as db_error:
+        #    return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 105
 
         return jsonify({
             "name": name,
