@@ -72,16 +72,16 @@ def character():
         }
 
         if not API_KEY:
-            return jsonify({"error": "API key is not set in environment variables"}), 500
+            return jsonify({"error": "API key is not set in environment variables"}), 100
 
         response = requests.request("POST", url, headers=headers, data=payload)
         if response.status_code != 200:
-            return jsonify({"error": "Failed to fetch data from LLM API", "status_code": response.status_code}), 500
+            return jsonify({"error": "Failed to fetch data from LLM API", "status_code": response.status_code}), 200
 
         try:
             result = response.json()
         except json.JSONDecodeError:
-            return jsonify({"error": "Invalid JSON response from LLM API", "response_text": response.text}), 500
+            return jsonify({"error": "Invalid JSON response from LLM API", "response_text": response.text}), 300
 
         
         character_response = result.get("choices", [{}])[0].get("message", {}).get("content", "Error generating response.")
@@ -105,7 +105,7 @@ def character():
                 """, (name, age, hobbies))
                 conn.commit()
         except sqlite3.DatabaseError as db_error:
-            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 404
+            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 400
 
         return jsonify({
             "name": name,
@@ -116,7 +116,7 @@ def character():
 
     except Exception as e:
         print(f"Exception Occurred: {e}")  
-        return jsonify({"error": str(e)}), 404
+        return jsonify({"error": str(e)}), 500
     
 @app.route('/get-profiles', methods=['GET'])
 def get_profiles():
