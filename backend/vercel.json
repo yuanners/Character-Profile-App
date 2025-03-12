@@ -9,7 +9,11 @@
         "dest": "app.py",
         "methods": [
                 "GET",
-                "POST"
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS"
             ]
       }
     ]
