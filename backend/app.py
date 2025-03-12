@@ -32,7 +32,7 @@ def root():
     return "Root directory."
 
 
-@app.route('/generate-character', methods=['GET'])
+@app.route('/generate-character', methods=['POST'])
 def character():
     try:
         data = request.get_json()
@@ -105,7 +105,7 @@ def character():
                 """, (name, age, hobbies))
                 conn.commit()
         except sqlite3.DatabaseError as db_error:
-            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 500
+            return jsonify({"error": f"Unable to connect to database: {str(db_error)}"}), 404
 
         return jsonify({
             "name": name,
@@ -116,7 +116,7 @@ def character():
 
     except Exception as e:
         print(f"Exception Occurred: {e}")  
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 404
     
 @app.route('/get-profiles', methods=['GET'])
 def get_profiles():
