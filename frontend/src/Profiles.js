@@ -6,7 +6,7 @@ const Profiles = ({ setShowQuiz }) => {
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const response = await fetch('http://127.0.0.1:5000/get-profiles');
+      const response = await fetch('https://character-profile-app-backend.vercel.app/get-profiles');
       const data = await response.json();
       setProfiles(data);
     };

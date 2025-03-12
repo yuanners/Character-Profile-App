@@ -6,21 +6,13 @@ from dotenv import load_dotenv
 import requests
 import json
 import re
-from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 CORS(app)
 
 
 load_dotenv()
-encryption_key = os.getenv("ENCRYPTION_KEY")
-encrypted_api_key = os.getenv("ENCRYPTED_API_KEY")
-
-if not encryption_key or not encrypted_api_key:
-    raise ValueError("Missing encryption key or encrypted API key in environment variables")
-
-cipher = Fernet(encryption_key.encode())
-API_KEY = cipher.decrypt(encrypted_api_key.encode()).decode()
+API_KEY = os.environ.get('API_KEY')
 DATABASE = "characters.db"
 
 def init_db():
@@ -144,4 +136,4 @@ def get_profiles():
 if __name__ == "__main__":
     root()
     init_db()
-    app.run(debug=True)
+    app.run()
